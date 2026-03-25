@@ -6,7 +6,6 @@ import os
 
 # Configuration
 TOPIC_NAME = 'weather-data'
-# Liste des fichiers (assure-toi qu'ils sont dans le même dossier)
 files = ['synop_2006.csv', 'synop_2007.csv', 'synop_2008.csv', 'synop_2009.csv', 'synop_2010.csv']
 
 print("Tentative de connexion à Kafka...")
@@ -35,7 +34,7 @@ def stream_csv(file_path):
         message = row.to_dict()
         clean_message = {k: (None if pd.isna(v) else v) for k, v in message.items()}
         producer.send(TOPIC_NAME, value=clean_message)
-        # On envoie 20 messages par seconde pour ne pas saturer ton Mac
+        # On envoie 20 messages par seconde pour ne pas saturer 
         time.sleep(0.05)
 
 if __name__ == "__main__":
